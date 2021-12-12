@@ -1,47 +1,18 @@
-import { render } from '@testing-library/react'
 import React from 'react'
 import  ReactDOM  from 'react-dom'
-
-interface AppProps {
-	color?: string
-}
-
-// interface AppState {
-// 	counter: number
-// }
+import {createStore, applyMiddleware} from 'redux'
+import {Provider} from 'react-redux'
+import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import {App }from './components/App'
+import {reducers} from './reducers'
 
 
+const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)))
 
-class App extends React.Component<AppProps> {
+ReactDOM.render(
+	<Provider store = {store }>
+			<App />
+	</Provider>,
 
-	state = { counter: 0}
-
-	// constructor(props: AppProps) {
-	// 	super(props)
-
-	// 	this.state = {counter: 0}
-	// }
-
-	
-
-	onInc ():void  {
-		this.setState({counter: this.state.counter + 1})
-
-	}
-
-	onDec ():void {
-		this.setState({counter: this.state.counter - 1})
-	}
-
-
-	render() {
-			return (
-				<div>
-					<button onClick={this.onInc.bind(this)}>+</button>
-					<button onClick={this.onDec.bind(this)}>-</button>
-					<span>{this.state.counter}</span>
-				</div>)
-	}
-}
-
-ReactDOM.render(<App color ='white'/>, document.querySelector('#root'))
+ document.querySelector('#root'))
