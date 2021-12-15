@@ -4,7 +4,7 @@ import {Todo , fetchTodos, deleteTodo} from '../actions/'
 import { StoreState } from '../reducers'
 
 interface AppProps {
-	todos: Todo[]
+	todosReducer: Todo[]
 	fetchTodos: Function
 	deleteTodo: typeof deleteTodo
 }
@@ -23,7 +23,7 @@ class _App extends React.Component<AppProps, AppState> {
 
 	
 	componentDidUpdate(prevProps: AppProps):void {
-		if (!prevProps.todos.length && this.props.todos.length){
+		if (!prevProps.todosReducer.length && this.props.todosReducer.length){
 			this.setState({fetching: false})
 	}
 	
@@ -54,22 +54,22 @@ this.setState({fetching: false})
 
 
 	render (){
-		const {todos} = this.props
+		const {todosReducer} = this.props
 		 return (
 			 <div>
 				 <button onClick ={this.onButtonClick}>Fetch</button>
 				 {this.state.fetching?<h3>Loading</h3> :null}
-				 {todos && !this.state.fetching &&
+				 {todosReducer && !this.state.fetching &&
 				 <div>
-					 <ul>{todos.map((item) => this.renderTodos(item))}</ul>
+					 <ul>{todosReducer.map((item) => this.renderTodos(item))}</ul>
 				 </div> }
 			 </div>
 		 )
 	}
 }
 
-const mapStateToProps = ({todos}: StoreState): {todos: Todo[]} => {
-	return { todos}
+const mapStateToProps = ({todosReducer}: StoreState): {todosReducer: Todo[]} => {
+	return { todosReducer}
 }
 
 const mapDispatchToProps = {
